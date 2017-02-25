@@ -56,9 +56,8 @@ void setup()
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
   myServo.write(90);
-  delay(500);
+  delay(1000);
   distance = sonar.ping_cm();
-
 } 
 
 void loop()
@@ -69,6 +68,7 @@ void loop()
     delay(1000);
     moveBackwards(180);
     scan();
+    delay(3000);
     if(lDistance < rDistance){
       moveRight(180);
       delay(1000);

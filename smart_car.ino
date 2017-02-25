@@ -63,25 +63,36 @@ void setup()
 
 void loop()
 {
-  //Get the distance retrieved
-  if(distance < triggerDistance){
-    moveStop();
-    delay(1000);
-    moveBackwards(180);
-    scan();
-    delay(3000);
-    if(lDistance < rDistance){
-      moveRight(180);
-      delay(1000);
-    }
-    else{
-      moveLeft(180);
-      delay(1000);
-    }
-  }
-  else{
-    moveForward(180);
-  }
+  moveForward(180);
+  delay(1000);
+  moveBackwards(180);
+  delay(1000);
+  moveRight(180);
+  delay(1000);
+  moveLeft(180);
+  delay(1000);
+  scan();
+  delay(3000);
+
+  // //Get the distance retrieved
+  // if(distance < triggerDistance){
+  //   moveStop();
+  //   delay(1000);
+  //   moveBackwards(180);
+  //   scan();
+  //   delay(3000);
+  //   if(lDistance < rDistance){
+  //     moveRight(180);
+  //     delay(1000);
+  //   }
+  //   else{
+  //     moveLeft(180);
+  //     delay(1000);
+  //   }
+  // }
+  // else{
+  //   moveForward(180);
+  // }
 }
 
 void scan()

@@ -33,8 +33,6 @@ int distance;                 // to store the distance calculated from the senso
 int fDistance;                // to store the distance in front of the robot
 int lDistance;                // to store the distance on the left side of the robot
 int rDistance;                // to store the distance on the right side of the robot
-char dist[3];
-char rot[3];
 
 char dist[3];
 char rot[3];

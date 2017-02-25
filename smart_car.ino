@@ -55,43 +55,34 @@ void setup()
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
-  moveForward(180);
+  scanLeft();
   delay(1000);
-  moveBackwards(180);
-  delay(1000);
-  moveRight(180);
-  delay(1000);
-  moveLeft(180);
-  delay(1000);
-  scan();
-  delay(3000);
-  distance = sonar.ping_cm();
+  time = sonar.ping();
+  distance = time / US_ROUNDTRIP_CM;
 } 
 
 void loop()
 {
   // //Get the distance retrieved
   if(distance < triggerDistance){
-    moveStop();
     delay(1000);
     moveBackwards(180);
     scanLeft();
     delay(1000);
-    time = sonar.ping();
-    distance = time / US_ROUNDTRIP_CM;
     if(distance < triggerDistance){
       scanright();
-      delay(1000);
-      time = sonar.ping();
-      distance = time / US_ROUNDTRIP_CM;
       if(distance < triggerDistance){
         moveRight(180);
-        delay(1000);
+        delay(500);
+        time = sonar.ping();
+        distance = time / US_ROUNDTRIP_CM;
       }
     }
     else{
       moveLeft(180);
-      delay(1000);
+      delay(500);
+      time = sonar.ping();
+      distance = time / US_ROUNDTRIP_CM;
     }
   }
   else{
@@ -115,10 +106,9 @@ void scanLeft()
     delay(30);
     displaySonar(deg);
   }
-  time = sonar.ping();
-  distance = time / US_ROUNDTRIP_CM;
-  lDistance = distance;
   delay(250);
+}
+
 void scanRight()
 {
   // scan left to right
@@ -136,9 +126,6 @@ void scanRight()
     delay(30);
     displaySonar(deg);
   }
-  time = sonar.ping();
-  distance = time / US_ROUNDTRIP_CM;
-  delay(250);
 
   // int deg = 90;
   // myServo.write(deg);

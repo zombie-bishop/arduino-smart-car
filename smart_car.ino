@@ -25,7 +25,7 @@ const int enB = 5;
 const int in3 = 7;
 const int in4 = 6;
 
-const int triggerDistance = 20;
+const int triggerDistance = 10;
 
 // Variables
 unsigned int time;            // to store how long it takes for the ultrasonic wave to come back
@@ -134,8 +134,7 @@ void scan()
 
 void displaySonar(int degrees) {
   delay(30);
-  if (distance < 0) distance = 0; 
-  
+
   sprintf(dist,"%3d",distance);
   Serial.print("Range:");
   Serial.print(dist);

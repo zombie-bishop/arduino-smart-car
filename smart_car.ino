@@ -68,25 +68,12 @@ void loop()
     delay(1000);
     moveBackwards(180);
     scanLeft();
-    delay(1000);
-    if(distance < triggerDistance){
-      scanRight();
-      if(distance < triggerDistance){
-        moveRight(180);
-        delay(500);
-        time = sonar.ping();
-        distance = time / US_ROUNDTRIP_CM;
-      }
-    }
-    else{
-      moveLeft(180);
-      delay(500);
-      time = sonar.ping();
-      distance = time / US_ROUNDTRIP_CM;
-    }
+    delay(2000);
   }
   else{
     moveForward(180);
+    time = sonar.ping();
+    distance = time / US_ROUNDTRIP_CM;
   }
 }
 
@@ -97,9 +84,6 @@ void scanLeft()
     delay(30);
     displaySonar(deg);
   }
-  time = sonar.ping();
-  distance = time / US_ROUNDTRIP_CM;
-  delay(250);
   // scan right to left
   for (int deg = 3; deg < 170; deg+=2) {
     myServo.write(deg);
@@ -107,6 +91,21 @@ void scanLeft()
     displaySonar(deg);
   }
   delay(250);
+  time = sonar.ping();
+  distance = time / US_ROUNDTRIP_CM;
+  delay(250);
+  for (int deg = 170; deg > 90; deg-=2) {
+    myServo.write(deg);
+    delay(30);
+    displaySonar(deg);
+  }
+  if(distance < triggerDistance){
+    moveLeft(180);
+    delay(500);
+  }
+  else{
+    scanRight();
+  }
 }
 
 void scanRight()
@@ -126,7 +125,10 @@ void scanRight()
     delay(30);
     displaySonar(deg);
   }
-
+  if(distance < triggerDistance){
+    moveRight(180);
+    delay(500);
+  }
   // int deg = 90;
   // myServo.write(deg);
   // displaySonar(deg);

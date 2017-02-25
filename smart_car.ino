@@ -98,6 +98,7 @@ void scan()
     delay(30);
     displaySonar(deg);
   }
+
   // scan right to left
   for (int deg = 3; deg < 170; deg+=2) {
     myServo.write(deg);
@@ -134,7 +135,10 @@ void scan()
 
 void displaySonar(int degrees) {
   delay(30);
-
+  distance = sonar.ping_cm();
+  if(distance <= 0){
+    distance = 21;
+  }
   sprintf(dist,"%3d",distance);
   Serial.print("Range:");
   Serial.print(dist);

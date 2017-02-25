@@ -70,7 +70,7 @@ void loop()
     scanLeft();
     delay(1000);
     if(distance < triggerDistance){
-      scanright();
+      scanRight();
       if(distance < triggerDistance){
         moveRight(180);
         delay(500);

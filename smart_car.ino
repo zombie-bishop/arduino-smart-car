@@ -59,7 +59,7 @@ void setup()
 
 void loop()
 {
-  moveForward(255);
+  
   //Get the distance retrieved
   if(distance < triggerDistance){
     moveBackwards(255);
@@ -74,6 +74,9 @@ void loop()
       delay(1000);
       moveForward(255);
     }
+  }
+  else{
+    moveForward(255);
   }
 }
 

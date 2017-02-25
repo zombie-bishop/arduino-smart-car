@@ -4,7 +4,7 @@
 // Video Demo: https://www.youtube.com/watch?v=_XRHTeurU34
 
 #include <Servo.h> 
-#include "NewPing.h"
+#include <NewPing.h>
 
 // Pins on the Arduino Sensor Shield v5.0
 #define SONAR_SERVO_PIN 4
@@ -88,7 +88,7 @@ void loop()
   }
 }
 
-void scan(deg)
+void scan(int deg)
 {
   myServo.write(deg);
   delay(10);

@@ -89,19 +89,33 @@ void loop()
 
 void scan()
 {
-  int deg = 90;
-  myServo.write(deg);
-  displaySonar(deg);
-  delay(10);
-
-  time = sonar.ping();
-  distance = time / US_ROUNDTRIP_CM;
-  delay(10);
-  if(distance <= 0){
-    distance = triggerDistance;
+  // scan right to left
+  for (int deg = 10; deg < 170; deg+=5) {
+    myServo.write(deg);
+    delay(300);
+    displaySonar(deg);
   }
 
-  delay(30);
+  // scan left to right
+  for (int deg = 170; deg > 10; deg-=5) {
+    myServo.write(deg);
+    delay(300);
+    displaySonar(deg);
+  }
+  
+  // int deg = 90;
+  // myServo.write(deg);
+  // displaySonar(deg);
+  // delay(10);
+
+  // time = sonar.ping();
+  // distance = time / US_ROUNDTRIP_CM;
+  // delay(10);
+  // if(distance <= 0){
+  //   distance = triggerDistance;
+  // }
+
+  // delay(30);
 }
 
 void displaySonar(int degrees) {

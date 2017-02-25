@@ -90,17 +90,17 @@ void loop()
 void scan()
 {
   // scan right to left
-  for (int deg = 10; deg < 170; deg+=5) {
+  for (int deg = 3; deg < 170; deg+=2) {
     myServo.write(deg);
-    delay(300);
+    delay(30);
     displaySonar(deg);
   }
 
   // scan left to right
-  for (int deg = 170; deg > 10; deg-=5) {
+  for (int deg = 170; deg > 10; deg-=2) {
     myServo.write(deg);
-    delay(300);
-    displaySonar(deg);
+    delay(30);
+   displaySonar(deg);
   }
 
   // int deg = 90;
@@ -120,6 +120,9 @@ void scan()
 
 void displaySonar(int degrees) {
   distance = sonar.ping_cm();
+  if(distance <= 0){
+    distance = triggerDistance;
+  }
   delay(30);
   if (distance < 0) distance = 0; 
   

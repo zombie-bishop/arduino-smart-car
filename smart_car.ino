@@ -102,7 +102,7 @@ void scan()
     delay(300);
     displaySonar(deg);
   }
-  
+
   // int deg = 90;
   // myServo.write(deg);
   // displaySonar(deg);
@@ -119,6 +119,7 @@ void scan()
 }
 
 void displaySonar(int degrees) {
+  distance = sonar.ping_cm();
   delay(30);
   if (distance < 0) distance = 0; 
   

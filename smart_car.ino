@@ -55,6 +55,7 @@ void setup()
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
+  distance = sonar.ping_cm();
 } 
 
 void loop()

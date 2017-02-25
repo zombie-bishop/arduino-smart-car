@@ -135,7 +135,8 @@ void scan()
 
 void displaySonar(int degrees) {
   delay(30);
-  distance = sonar.ping_cm();
+  time = sonar.ping();
+  distance = time / US_ROUNDTRIP_CM;
   if(distance <= 0){
     distance = 21;
   }

@@ -77,6 +77,7 @@ void loop()
     moveBackwards(180);
     scan();
     delay(3000);
+
     if(lDistance < rDistance){
       moveRight(180);
       delay(1000);
@@ -129,6 +130,10 @@ void scan()
   time = sonar.ping();
   distance = time / US_ROUNDTRIP_CM;
   delay(250);
+  Serial.print("rDistance:");
+  Serial.print(rDistance);
+  Serial.print("lDistance:");
+  Serial.print(lDistance);
   // int deg = 90;
   // myServo.write(deg);
   // displaySonar(deg);

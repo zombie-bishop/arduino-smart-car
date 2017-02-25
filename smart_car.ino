@@ -58,9 +58,9 @@ void setup()
 
 void loop()
 {
+  moveForward(255);
   scan();                                //Get the distance retrieved
-  fDistance = distance;
-  if(fDistance < triggerDistance){
+  if(distance < triggerDistance){
     moveBackwards(255);
     delay(1000); 
     moveRight(255);
@@ -82,9 +82,6 @@ void loop()
       moveForward(255);
     }
   }
-  else{
-    moveForward(255);
-  }
 }
 
 void scan()
@@ -94,13 +91,19 @@ void scan()
     myServo.write(deg);
     delay(30);
     displaySonar(deg);
+    if (distance < triggerDistance) {
+      break;
+    }
   }
 
   // scan left to right
   for (int deg = 170; deg > 10; deg-=2) {
     myServo.write(deg);
     delay(30);
-   displaySonar(deg);
+    displaySonar(deg);
+    if (distance < triggerDistance) {
+      break;
+    }
   }
 
   // int deg = 90;
@@ -138,10 +141,13 @@ void displaySonar(int degrees) {
     Serial.print("-");
   }
   Serial.println("=");
+  fDistance = distance;
+  
 }
 
 void moveForward(int speed)
 {
+  Serial.print("move forward");
   // turn on motor A
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
@@ -205,5 +211,3 @@ void moveStop()
 
   delay(200);
 }
-
-

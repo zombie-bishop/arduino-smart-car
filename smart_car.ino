@@ -33,6 +33,7 @@ int distance;                 // to store the distance calculated from the senso
 int fDistance;                // to store the distance in front of the robot
 int lDistance;                // to store the distance on the left side of the robot
 int rDistance;                // to store the distance on the right side of the robot
+int scanDegrees = 90;
 
 char dist[3];
 char rot[3];
@@ -59,26 +60,18 @@ void setup()
 void loop()
 {
   moveForward(255);
-  scan();                                //Get the distance retrieved
+  //Get the distance retrieved
   if(distance < triggerDistance){
     moveBackwards(255);
-    delay(1000); 
-    moveRight(255);
-    delay(300);
-    moveStop();
     scan();
-    rDistance = distance;
-    moveLeft(255);
-    delay(500);
-    moveStop();
-    scan();
-    lDistance = distance;
     if(lDistance < rDistance){
       moveRight(255);
       delay(1000);
       moveForward(255);
     }
     else{
+      moveLeft(255);
+      delay(1000);
       moveForward(255);
     }
   }
@@ -91,21 +84,15 @@ void scan()
     myServo.write(deg);
     delay(30);
     displaySonar(deg);
-    if (distance < triggerDistance) {
-      break;
-    }
   }
-
+  lDistance = sonar.ping_cm();
   // scan left to right
   for (int deg = 170; deg > 10; deg-=2) {
     myServo.write(deg);
     delay(30);
     displaySonar(deg);
-    if (distance < triggerDistance) {
-      break;
-    }
   }
-
+  rDistance = sonar.ping_cm();
   // int deg = 90;
   // myServo.write(deg);
   // displaySonar(deg);
@@ -122,10 +109,6 @@ void scan()
 }
 
 void displaySonar(int degrees) {
-  distance = sonar.ping_cm();
-  if(distance <= 0){
-    distance = triggerDistance;
-  }
   delay(30);
   if (distance < 0) distance = 0; 
   
@@ -141,13 +124,12 @@ void displaySonar(int degrees) {
     Serial.print("-");
   }
   Serial.println("=");
-  fDistance = distance;
-  
 }
 
 void moveForward(int speed)
 {
   Serial.print("move forward");
+  distance = sonar.ping_cm();
   // turn on motor A
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);

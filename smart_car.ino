@@ -4,7 +4,7 @@
 // Video Demo: https://www.youtube.com/watch?v=_XRHTeurU34
 
 #include <Servo.h> 
-#include "NewPing.h"
+#include <NewPing.h>
 
 // Pins on the Arduino Sensor Shield v5.0
 #define SONAR_SERVO_PIN 4
@@ -107,7 +107,6 @@ void scan()
 }
 
 void displaySonar(int degrees) {
-  int distance = sonar.ping_cm(); 
   delay(30);
   if (distance < 0) distance = 0; 
   

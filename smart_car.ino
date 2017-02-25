@@ -98,26 +98,37 @@ void scan()
     delay(30);
     displaySonar(deg);
   }
-
+  time = sonar.ping();
+  distance = time / US_ROUNDTRIP_CM;
+  delay(250);
   // scan right to left
   for (int deg = 3; deg < 170; deg+=2) {
     myServo.write(deg);
     delay(30);
     displaySonar(deg);
   }
-  lDistance = sonar.ping_cm();
+  time = sonar.ping();
+  distance = time / US_ROUNDTRIP_CM;
+  lDistance = distance;
+  delay(250);
   // scan left to right
   for (int deg = 170; deg > 10; deg-=2) {
     myServo.write(deg);
     delay(30);
     displaySonar(deg);
   }
-  rDistance = sonar.ping_cm();
+  time = sonar.ping();
+  distance = time / US_ROUNDTRIP_CM;
+  rDistance = distance;
+  delay(250);
   for (int deg = 19; deg < 90; deg+=2) {
     myServo.write(deg);
     delay(30);
     displaySonar(deg);
   }
+  time = sonar.ping();
+  distance = time / US_ROUNDTRIP_CM;
+  delay(250);
   // int deg = 90;
   // myServo.write(deg);
   // displaySonar(deg);
@@ -135,11 +146,7 @@ void scan()
 
 void displaySonar(int degrees) {
   delay(30);
-  time = sonar.ping();
-  distance = time / US_ROUNDTRIP_CM;
-  if(distance <= 0){
-    distance = 21;
-  }
+
   sprintf(dist,"%3d",distance);
   Serial.print("Range:");
   Serial.print(dist);

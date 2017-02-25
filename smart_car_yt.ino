@@ -62,16 +62,11 @@ void loop()
   if(fDistance < triggerDistance){
     moveBackwards(255);
     delay(1000); 
-    moveRight(255);
-    delay(300);
-    moveStop();
-    scan(3);
-    delay(300);
-    rDistance = distance;
-    moveLeft(255);
-    delay(500);
     moveStop();
     scan(170);
+    delay(300);
+    rDistance = distance;
+    scan(3);
     delay(300);
     lDistance = distance;
     if(lDistance < rDistance){
@@ -80,6 +75,8 @@ void loop()
       moveForward(255);
     }
     else{
+      moveLeft(255);
+      delay(1000);
       moveForward(255);
     }
   }

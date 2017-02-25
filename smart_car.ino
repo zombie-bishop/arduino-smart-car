@@ -33,7 +33,8 @@ int distance;                 // to store the distance calculated from the senso
 int fDistance;                // to store the distance in front of the robot
 int lDistance;                // to store the distance on the left side of the robot
 int rDistance;                // to store the distance on the right side of the robot
-
+char dist[3];
+char rot[3];
 
 char dist[3];
 char rot[3];
@@ -41,7 +42,9 @@ int rotation = 0;
 String output = "";
 
 void setup() 
-{ 
+{
+  Serial.begin(9600);
+  Serial.println("===== Smart Car =====");
   pinMode (TRIGGER_PIN, OUTPUT);
   pinMode (ECHO_PIN, INPUT);
   myServo.attach(SONAR_SERVO_PIN);  // Attaches the Servo to the Servo Object 
@@ -90,6 +93,7 @@ void scan()
 {
   int deg = 90;
   myServo.write(deg);
+  displaySonar(deg);
   delay(10);
 
   time = sonar.ping();
@@ -100,6 +104,25 @@ void scan()
   }
 
   delay(30);
+}
+
+void displaySonar(int degrees) {
+  int distance = sonar.ping_cm(); 
+  delay(30);
+  if (distance < 0) distance = 0; 
+  
+  sprintf(dist,"%3d",distance);
+  Serial.print("Range:");
+  Serial.print(dist);
+  Serial.print("cms/");
+  sprintf(rot,"%3d",degrees);
+  Serial.print(rot);
+  Serial.print("deg:");
+
+  for (int dloop = 0; dloop < distance/4; dloop++) {
+    Serial.print("-");
+  }
+  Serial.println("=");
 }
 
 void moveForward(int speed)

@@ -55,14 +55,6 @@ void setup()
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
-  myServo.write(90);
-  delay(500);
-  distance = sonar.ping_cm();
-
-} 
-
-void loop()
-{
   moveForward(180);
   delay(1000);
   moveBackwards(180);
@@ -73,30 +65,39 @@ void loop()
   delay(1000);
   scan();
   delay(3000);
+  distance = sonar.ping_cm();
+} 
 
+void loop()
+{
   // //Get the distance retrieved
-  // if(distance < triggerDistance){
-  //   moveStop();
-  //   delay(1000);
-  //   moveBackwards(180);
-  //   scan();
-  //   delay(3000);
-  //   if(lDistance < rDistance){
-  //     moveRight(180);
-  //     delay(1000);
-  //   }
-  //   else{
-  //     moveLeft(180);
-  //     delay(1000);
-  //   }
-  // }
-  // else{
-  //   moveForward(180);
-  // }
+  if(distance < triggerDistance){
+    moveStop();
+    delay(1000);
+    moveBackwards(180);
+    scan();
+    delay(3000);
+    if(lDistance < rDistance){
+      moveRight(180);
+      delay(1000);
+    }
+    else{
+      moveLeft(180);
+      delay(1000);
+    }
+  }
+  else{
+    moveForward(180);
+  }
 }
 
 void scan()
 {
+  for (int deg = 90; deg > 3; deg-=2) {
+    myServo.write(deg);
+    delay(30);
+    displaySonar(deg);
+  }
   // scan right to left
   for (int deg = 3; deg < 170; deg+=2) {
     myServo.write(deg);
@@ -111,6 +112,11 @@ void scan()
     displaySonar(deg);
   }
   rDistance = sonar.ping_cm();
+  for (int deg = 19; deg < 90; deg+=2) {
+    myServo.write(deg);
+    delay(30);
+    displaySonar(deg);
+  }
   // int deg = 90;
   // myServo.write(deg);
   // displaySonar(deg);

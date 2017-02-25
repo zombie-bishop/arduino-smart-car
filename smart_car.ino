@@ -25,7 +25,7 @@ const int enB = 5;
 const int in3 = 7;
 const int in4 = 6;
 
-const int triggerDistance = 10;
+const int triggerDistance = 20;
 
 // Variables
 unsigned int time;            // to store how long it takes for the ultrasonic wave to come back
@@ -33,7 +33,7 @@ int distance;                 // to store the distance calculated from the senso
 int fDistance;                // to store the distance in front of the robot
 int lDistance;                // to store the distance on the left side of the robot
 int rDistance;                // to store the distance on the right side of the robot
-int scanDegrees = 90;
+
 
 char dist[3];
 char rot[3];
@@ -41,9 +41,7 @@ int rotation = 0;
 String output = "";
 
 void setup() 
-{
-  Serial.begin(9600);
-  Serial.println("===== Smart Car =====");
+{ 
   pinMode (TRIGGER_PIN, OUTPUT);
   pinMode (ECHO_PIN, INPUT);
   myServo.attach(SONAR_SERVO_PIN);  // Attaches the Servo to the Servo Object 
@@ -55,90 +53,65 @@ void setup()
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
-  time = sonar.ping();
-  distance = time / US_ROUNDTRIP_CM;
 } 
 
 void loop()
 {
-  delay(1000);
-  // //Get the distance retrieved
-  if(distance < triggerDistance){
-    delay(1000);
-    moveBackwards(180);
-    for (int deg = 90; deg > 3; deg-=2) {
-      myServo.write(deg);
-      delay(30);
-      displaySonar(deg);
+  scan(90);                                //Get the distance retrieved
+  fDistance = distance;
+  if(fDistance < triggerDistance){
+    moveBackwards(128);
+    delay(1000); 
+    moveStop();
+    scan(135);
+    delay(300);
+    rDistance = distance;
+    if(rDistance < fDistance){
+      scan(170);
+      delay(300);
+      rDistance = distance;
     }
-    // scan right to left
-    for (int deg = 3; deg < 170; deg+=2) {
-      myServo.write(deg);
-      delay(30);
-      displaySonar(deg);
+    scan(45);
+    delay(300);
+    lDistance = distance;
+    if(lDistance < fDistance){
+      scan(3);
+      delay(300);
+      lDistance = distance;
     }
-    delay(250);
-    time = sonar.ping();
-    distance = time / US_ROUNDTRIP_CM;
-    delay(250);
-    for (int deg = 170; deg > 90; deg-=2) {
-      myServo.write(deg);
-      delay(30);
-      displaySonar(deg);
-    }
-    if(distance < triggerDistance){
-      moveLeft(180);
-      delay(500);
+    if(lDistance < rDistance){
+      moveRight(128);
+      delay(1000);
+      moveForward(128);
     }
     else{
-      for (int deg = 170; deg > 10; deg-=2) {
-        myServo.write(deg);
-        delay(30);
-        displaySonar(deg);
-      }
-      time = sonar.ping();
-      distance = time / US_ROUNDTRIP_CM;
-      rDistance = distance;
-      delay(250);
-      for (int deg = 19; deg < 90; deg+=2) {
-        myServo.write(deg);
-        delay(30);
-        displaySonar(deg);
-      }
-      if(distance < triggerDistance){
-        moveRight(180);
-        delay(500);
-      }
+      moveLeft(128);
+      delay(1000);
+      moveForward(128);
     }
-    delay(2000);
   }
   else{
-    moveForward(180);
-    time = sonar.ping();
-    distance = time / US_ROUNDTRIP_CM;
+    moveForward(255);
   }
 }
 
-void displaySonar(int degrees) {
-  delay(30);
+void scan(int deg)
+{
+  myServo.write(deg);
+  delay(10);
 
-  sprintf(dist,"%3d",distance);
-  Serial.print("Range:");
-  Serial.print(dist);
-  Serial.print("cms/");
-  sprintf(rot,"%3d",degrees);
-  Serial.print(rot);
-  Serial.print("deg:");
-
-  for (int dloop = 0; dloop < distance/4; dloop++) {
-    Serial.print("-");
+  time = sonar.ping();
+  distance = time / US_ROUNDTRIP_CM;
+  delay(10);
+  if(distance <= 0){
+    distance = triggerDistance;
   }
-  Serial.println("=");
+
+  delay(30);
 }
 
 void moveForward(int speed)
 {
-  Serial.print("move forward");
   // turn on motor A
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
@@ -169,7 +142,7 @@ void moveRight(int speed)
 {
   // turn on motor A
   digitalWrite(in1, LOW);
-  digitalWrite(in2, LOW);
+  digitalWrite(in2, HIGH);
 
   // turn off motor B
   digitalWrite(in3, HIGH);
@@ -187,7 +160,7 @@ void moveLeft(int speed)
 
   // turn off motor B
   digitalWrite(in3, LOW);
-  digitalWrite(in4, LOW);
+  digitalWrite(in4, HIGH);
 
   analogWrite(enA, speed);
   analogWrite(enB, speed);
@@ -202,3 +175,5 @@ void moveStop()
 
   delay(200);
 }
+
+

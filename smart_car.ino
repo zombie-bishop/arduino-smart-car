@@ -56,13 +56,15 @@ void setup()
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
   distance = sonar.ping_cm();
+  myServo.write(deg);
 } 
 
 void loop()
 {
-  
   //Get the distance retrieved
   if(distance < triggerDistance){
+    moveStop();
+    delay(1000);
     moveBackwards(180);
     scan();
     if(lDistance < rDistance){

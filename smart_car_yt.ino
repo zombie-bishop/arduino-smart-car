@@ -42,6 +42,8 @@ String output = "";
 
 void setup() 
 { 
+  Serial.begin(9600);		
+  Serial.println("===== Smart Car =====");
   pinMode (TRIGGER_PIN, OUTPUT);
   pinMode (ECHO_PIN, INPUT);
   myServo.attach(SONAR_SERVO_PIN);  // Attaches the Servo to the Servo Object 
@@ -102,6 +104,7 @@ void scan(int deg)
 
 void moveForward(int speed)
 {
+  Serial.print("Start Move Fwd");
   // turn on motor A
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
@@ -111,7 +114,9 @@ void moveForward(int speed)
   digitalWrite(in4, LOW);
 
   analogWrite(enA, speed);
+  Serial.print("Move Fwd A");
   analogWrite(enB, speed);
+  Serial.print("Move Fwd B");
 }
 
 void moveBackwards(int speed)
@@ -165,3 +170,5 @@ void moveStop()
 
   delay(200);
 }
+
+

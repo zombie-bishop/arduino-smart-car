@@ -108,14 +108,18 @@ void moveForward(int speed)
   // turn on motor A
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
-  analogWrite(enA, speed);
-  Serial.print("Move Fwd A/");
+  analogWrite(enA, 128);
+  Serial.print("Move Fwd A: ");
+  Serial.print(speed);
+  Serial.print("mph/");
   
   // turn on motor B
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
-  analogWrite(enB, speed);
+  analogWrite(enB, 128);
   Serial.print("Move Fwd B/");
+  Serial.print(speed);
+  Serial.print("mph/");
 }
 
 void moveBackwards(int speed)

@@ -60,8 +60,8 @@ void loop()
   scan(90);                                //Get the distance retrieved
   fDistance = distance;
   if(fDistance < triggerDistance){
-    moveBackwards(255);
-    delay(1000); 
+    moveBackwards(128);
+    delay(682); 
     moveStop();
     scan(170);
     delay(300);
@@ -70,18 +70,18 @@ void loop()
     delay(300);
     lDistance = distance;
     if(lDistance < rDistance){
-      moveRight(255);
-      delay(1000);
-      moveForward(255);
+      moveRight(128);
+      delay(682);
+      moveForward(128);
     }
     else{
-      moveLeft(255);
-      delay(1000);
-      moveForward(255);
+      moveLeft(128);
+      delay(682);
+      moveForward(128);
     }
   }
   else{
-    moveForward(255);
+    moveForward(128);
   }
 }
 
@@ -165,5 +165,3 @@ void moveStop()
 
   delay(200);
 }
-
-

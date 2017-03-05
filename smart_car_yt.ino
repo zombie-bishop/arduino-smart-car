@@ -25,7 +25,7 @@ const int enB = 5;
 const int in3 = 7;
 const int in4 = 6;
 
-const int triggerDistance = 20;
+const int triggerDistance = 25;
 
 // Variables
 unsigned int time;            // to store how long it takes for the ultrasonic wave to come back

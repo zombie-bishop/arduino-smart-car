@@ -104,18 +104,18 @@ void scan(int deg)
 
 void moveForward(int speed)
 {
-  Serial.print("Start Move Fwd");
+  Serial.print("Start Move Fwd/");
   // turn on motor A
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
   analogWrite(enA, speed);
-  Serial.print("Move Fwd A");
+  Serial.print("Move Fwd A/");
   
   // turn on motor B
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
   analogWrite(enB, speed);
-  Serial.print("Move Fwd B");
+  Serial.print("Move Fwd B/");
 }
 
 void moveBackwards(int speed)
